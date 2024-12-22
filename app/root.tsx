@@ -1,28 +1,39 @@
 import {
+  Link,
   Links,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
-
-import "./tailwind.css";
+import { json, LinksFunction } from "@remix-run/node";
+import tailwind from "./tailwind.css?url";
+import { fetchQueues, Queue } from "~/transport/queues.server";
 
 export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
+  { rel: "stylesheet", href: tailwind },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Queue" },
+    {
+      name: "description",
+      content: "Daily task management app",
+    },
+  ];
+};
+
+export const loader = async () => {
+  const queues = await fetchQueues();
+  return json({ queues });
+};
+
+export default function App() {
+  const { queues } = useLoaderData<typeof loader>();
+
   return (
     <html lang="en">
       <head>
@@ -32,14 +43,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div className="flex h-screen items-center justify-center flex-col gap-4">
+          <h1 className="text-3xl font-bold">Queue</h1>
+          <nav className="flex flex-col gap-2 items-center">
+            {queues.map((queue: Queue) => (
+              <Link
+                key={queue.id}
+                to={`/queues/${queue.id}`}
+                className="text-blue-500"
+              >
+                {queue.name}
+              </Link>
+            ))}
+
+            <Outlet />
+          </nav>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-}
-
-export default function App() {
-  return <Outlet />;
 }

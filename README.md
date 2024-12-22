@@ -1,40 +1,22 @@
-# Welcome to Remix!
+# Welcome to Queues!
 
-- 📖 [Remix docs](https://remix.run/docs)
+Queues is a web application that can be used to manage your daily tasks and
+keep track of your daily progress.
+
+**README** under construction 🏗️
+
+## Decisions & Stack
+
+- The app is built with [Remix](https://remix.run/). I wanted to give a try to the framework and live all the end-to-end journey
+- The app uses [Tailwind](https://tailwindcss.com/) to style all the components. I'm a big fan of Tailwind!
+- The app is connected to a [Supabase](https://supabase.io/) database for now. 
+I will manage authentication there as well. This is a temporal approach, I plan to work on the server side at some point with 
+Golang or another new technology to me.
 
 ## Development
 
 Run the dev server:
 
 ```shellscript
-npm run dev
+yarn dev
 ```
-
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
