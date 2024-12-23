@@ -1,5 +1,4 @@
 import {
-  Link,
   Links,
   Meta,
   MetaFunction,
@@ -10,7 +9,9 @@ import {
 } from "@remix-run/react";
 import { json, LinksFunction } from "@remix-run/node";
 import tailwind from "./tailwind.css?url";
-import { fetchQueues, Queue } from "~/transport/queues.server";
+import { fetchQueues } from "~/transport/queues.server";
+import { Header } from "~/components/header";
+import { Queues } from "~/components/queues";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
@@ -42,23 +43,16 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <div className="flex h-screen items-center justify-center flex-col gap-4">
-          <h1 className="text-3xl font-bold">Queue</h1>
-          <nav className="flex flex-col gap-2 items-center">
-            {queues.map((queue: Queue) => (
-              <Link
-                key={queue.id}
-                to={`/queues/${queue.id}`}
-                className="text-blue-500"
-              >
-                {queue.name}
-              </Link>
-            ))}
 
+      <body className="bg-slate-100 h-screen">
+        <Header />
+        <main className="flex flex-col gap-8">
+          <Queues queues={queues} />
+
+          <div className="flex items-center flex-col h-full mx-40">
             <Outlet />
-          </nav>
-        </div>
+          </div>
+        </main>
         <ScrollRestoration />
         <Scripts />
       </body>

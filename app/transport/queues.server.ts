@@ -1,6 +1,7 @@
 import { createClient } from "~/transport/api-client.server";
 
 export type Task = {
+  id: string;
   title: string;
 };
 

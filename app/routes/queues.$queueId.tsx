@@ -1,8 +1,9 @@
-import { fetchQueue, Task } from "~/transport/queues.server";
+import { fetchQueue, Task as TaskType } from "~/transport/queues.server";
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
+import { Task } from "~/components/task";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.queueId, "Missing queueId param");
@@ -22,9 +23,9 @@ export default function Queue() {
   const { queue } = useLoaderData<typeof loader>();
 
   return (
-    <div id="queue">
-      {queue.tasks.map((task: Task, index: number) => (
-        <h1 key={index}>{task.title}</h1>
+    <div id="queue" className="w-full">
+      {queue.tasks.map((task: TaskType) => (
+        <Task key={task.id} task={task} />
       ))}
     </div>
   );
