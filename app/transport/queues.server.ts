@@ -1,4 +1,5 @@
 import { createClient } from "~/transport/api-client.server";
+import { uniqueNamesGenerator, animals } from "unique-names-generator";
 
 export type Task = {
   id: string;
@@ -14,7 +15,8 @@ export type Queue = {
 export const fetchQueues = async () => {
   const { data: queues, error } = await createClient()
     .from("queues")
-    .select("id, name");
+    .select("id, name")
+    .order("created_at");
 
   if (error) {
     return [];
@@ -43,4 +45,29 @@ export const fetchQueue = async (queueId: string) => {
   }
 
   return queue as unknown as Queue;
+};
+
+export const createEmptyQueue = async () => {
+  const { data: queue, error } = await createClient()
+    .from("queues")
+    .insert({ name: uniqueNamesGenerator({ dictionaries: [animals] }) })
+    .single();
+
+  if (error) {
+    return null;
+  }
+
+  return queue as unknown as Queue;
+};
+
+export const deleteQueue = async (queueId: string) => {
+  await createClient().from("queues").delete().eq("id", queueId);
+};
+
+export const updateQueueName = async (queueId: string, name: string | null) => {
+  if (!name) {
+    return;
+  }
+
+  await createClient().from("queues").update({ name }).eq("id", queueId);
 };

@@ -9,7 +9,7 @@ import {
 } from "@remix-run/react";
 import { json, LinksFunction } from "@remix-run/node";
 import tailwind from "./tailwind.css?url";
-import { fetchQueues } from "~/transport/queues.server";
+import { createEmptyQueue, fetchQueues } from "~/transport/queues.server";
 import { Header } from "~/components/header";
 import { Queues } from "~/components/queues";
 
@@ -29,11 +29,20 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   const queues = await fetchQueues();
-  return json({ queues });
+  return json({
+    queues,
+  });
+};
+
+export const action = async () => {
+  const queue = await createEmptyQueue();
+  return json({ queue });
 };
 
 export default function App() {
   const { queues } = useLoaderData<typeof loader>();
+
+  const onAddQueueClick = () => {};
 
   return (
     <html lang="en">
@@ -47,7 +56,7 @@ export default function App() {
       <body className="bg-slate-100 h-screen">
         <Header />
         <main className="flex flex-col gap-8">
-          <Queues queues={queues} />
+          <Queues queues={queues} onAddQueueClick={onAddQueueClick} />
 
           <div className="flex items-center flex-col h-full mx-40">
             <Outlet />

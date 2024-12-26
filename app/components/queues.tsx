@@ -1,23 +1,37 @@
 import { Queue } from "~/transport/queues.server";
-import { Link } from "@remix-run/react";
+import { Button } from "~/components/common/button";
+import { Form, useNavigation } from "@remix-run/react";
 
 type Props = {
   queues: Queue[];
+  onAddQueueClick: VoidFunction;
 };
 
-export const Queues = ({ queues }: Props) => (
-  <nav className="flex gap-2 h-fit mt-8 justify-center">
-    {queues.map((queue: Queue) => (
-      <Link
-        key={queue.id}
-        to={`/queues/${queue.id}`}
-        className="bg-orange-400 hover:bg-orange-300 shadow-md rounded-lg text-white px-4 py-2 h-10"
-      >
-        {queue.name}
-      </Link>
-    ))}
-    <button className="ml-4 bg-slate-400 hover:bg-slate-300 shadow-md rounded-full text-white px-4 py-2 h-10">
-      +
-    </button>
-  </nav>
-);
+export const Queues = ({ queues, onAddQueueClick }: Props) => {
+  const { state } = useNavigation();
+
+  return (
+    <nav className="flex gap-2 h-fit mt-8 justify-center">
+      {queues.map((queue: Queue) => (
+        <Button
+          color="blue"
+          disabled={state === "loading"}
+          key={queue.id}
+          isLink
+          gotToPath={`/queues/${queue.id}`}
+          text={queue.name}
+        />
+      ))}
+      <Form method="post">
+        <Button
+          type="submit"
+          disabled={state === "loading"}
+          onClick={onAddQueueClick}
+          color="sky"
+          fullRounded
+          text="+"
+        />
+      </Form>
+    </nav>
+  );
+};
