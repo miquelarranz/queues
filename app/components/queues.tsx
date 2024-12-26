@@ -18,7 +18,7 @@ export const Queues = ({ queues, onAddQueueClick }: Props) => {
           disabled={state === "loading"}
           key={queue.id}
           isLink
-          gotToPath={`/queues/${queue.id}`}
+          gotToPath={`/queues/${queue.id}/tasks`}
           text={queue.name}
         />
       ))}

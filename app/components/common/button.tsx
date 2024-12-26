@@ -1,6 +1,12 @@
 import { NavLink } from "@remix-run/react";
 
-export type ButtonColors = "blue" | "orange" | "green" | "red" | "sky";
+export type ButtonColors =
+  | "blue"
+  | "orange"
+  | "green"
+  | "red"
+  | "sky"
+  | "slate";
 
 type Props = {
   text: string;
@@ -20,6 +26,7 @@ const DEFAULT_PROPS = {
 };
 
 const colorToClass = {
+  slate: "bg-slate-400 hover:bg-slate-300",
   blue: "bg-blue-400 hover:bg-blue-300",
   orange: "bg-orange-400 hover:bg-orange-300",
   green: "bg-green-400 hover:bg-green-300",
@@ -28,6 +35,7 @@ const colorToClass = {
 };
 
 const colorToActiveClass = {
+  slate: "bg-slate-600 hover:bg-slate-500",
   blue: "bg-blue-600 hover:bg-blue-500",
   orange: "bg-orange-600 hover:bg-orange-500",
   green: "bg-green-600 hover:bg-green-500",

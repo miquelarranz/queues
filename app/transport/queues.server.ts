@@ -1,10 +1,6 @@
 import { createClient } from "~/transport/api-client.server";
 import { uniqueNamesGenerator, animals } from "unique-names-generator";
-
-export type Task = {
-  id: string;
-  title: string;
-};
+import { Task } from "~/transport/tasks.server";
 
 export type Queue = {
   id: string;
@@ -51,13 +47,14 @@ export const createEmptyQueue = async () => {
   const { data: queue, error } = await createClient()
     .from("queues")
     .insert({ name: uniqueNamesGenerator({ dictionaries: [animals] }) })
+    .select("id")
     .single();
 
   if (error) {
     return null;
   }
 
-  return queue as unknown as Queue;
+  return queue as Queue;
 };
 
 export const deleteQueue = async (queueId: string) => {

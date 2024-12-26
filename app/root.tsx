@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import { json, LinksFunction } from "@remix-run/node";
+import { json, LinksFunction, redirect } from "@remix-run/node";
 import tailwind from "./tailwind.css?url";
 import { createEmptyQueue, fetchQueues } from "~/transport/queues.server";
 import { Header } from "~/components/header";
@@ -36,7 +36,8 @@ export const loader = async () => {
 
 export const action = async () => {
   const queue = await createEmptyQueue();
-  return json({ queue });
+  console.log(queue);
+  return queue ? redirect(`/queues/${queue.id}/tasks`) : null;
 };
 
 export default function App() {
