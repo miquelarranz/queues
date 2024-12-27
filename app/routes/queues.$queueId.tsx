@@ -28,7 +28,9 @@ export default function Queue() {
           Settings
         </a>
       </section>
-      <Outlet />
+      <section className="w-full">
+        <Outlet />
+      </section>
     </div>
   );
 }

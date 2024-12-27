@@ -26,12 +26,8 @@ export const fetchQueue = async (queueId: string) => {
     .from("queues")
     .select(
       `
-      id,
-      name,
-      tasks (
-        id,
-        title
-      )`
+      id
+      `
     )
     .eq("id", queueId)
     .maybeSingle();

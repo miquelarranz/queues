@@ -46,7 +46,7 @@ export default function App() {
   const onAddQueueClick = () => {};
 
   return (
-    <html lang="en">
+    <html lang="en" data-theme="emerald">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -59,7 +59,10 @@ export default function App() {
         <main className="flex flex-col gap-8">
           <Queues queues={queues} onAddQueueClick={onAddQueueClick} />
 
-          <div className="flex items-center flex-col h-full mx-40">
+          <div
+            className="flex items-center flex-col pb-10 px-40 overflow-y-scroll"
+            style={{ maxHeight: "calc(100vh - 160px)" }}
+          >
             <Outlet />
           </div>
         </main>
