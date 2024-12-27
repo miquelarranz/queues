@@ -1,6 +1,5 @@
 import {
   ActionFunctionArgs,
-  json,
   LoaderFunctionArgs,
   redirect,
 } from "@remix-run/node";
@@ -18,7 +17,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Not Found", { status: 404 });
   }
 
-  return json({ queue });
+  return Response.json({ queue });
 };
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {

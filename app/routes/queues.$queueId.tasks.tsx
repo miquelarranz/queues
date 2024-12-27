@@ -1,10 +1,6 @@
 import { fetchQueue } from "~/transport/queues.server";
 import { Task as TaskType, createEmptyTask } from "~/transport/tasks.server";
-import {
-  type ActionFunctionArgs,
-  json,
-  LoaderFunctionArgs,
-} from "@remix-run/node";
+import { type ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { Task } from "~/components/task";
@@ -18,14 +14,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Not Found", { status: 404 });
   }
 
-  return json({ queue });
+  return Response.json({ queue });
 };
 
 export const action = async ({ params }: ActionFunctionArgs) => {
   invariant(params.queueId, "Missing queueId param");
   const task = await createEmptyTask(params.queueId);
 
-  return json({ task });
+  return Response.json({ task });
 };
 
 const AddTaskButton = () => {
