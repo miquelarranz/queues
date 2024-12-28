@@ -15,6 +15,7 @@ type Props = {
   disabled?: boolean;
   name?: string;
   value?: string;
+  outlined?: boolean;
 };
 
 const kindToClass: Record<ButtonKind, string> = {
@@ -40,6 +41,7 @@ export const Button = ({
   kind = "default",
   size = "medium",
   value,
+  outlined,
 }: Props) => {
   const className = `${kindToClass[kind]} ${sizeToClass[size]} ${
     fullRounded ? "btn-circle" : ""
@@ -52,7 +54,8 @@ export const Button = ({
       className={({ isActive }) =>
         `${className} ${isActive ? "" : "btn-outline"} ${
           disabled ? "btn-disabled" : ""
-        }`
+        }
+        ${outlined ? "btn-outline" : ""}`
       }
     >
       {text}
@@ -62,7 +65,9 @@ export const Button = ({
       name={name}
       value={value}
       onClick={onClick}
-      className={`${className} ${disabled ? "btn-disabled" : ""}`}
+      className={`${className} ${disabled ? "btn-disabled" : ""} ${
+        outlined ? "btn-outline" : ""
+      }`}
       type={type}
     >
       {text}

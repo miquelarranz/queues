@@ -56,8 +56,10 @@ export default function App() {
 
       <body className="bg-slate-100 h-screen">
         <Header />
-        <main className="flex flex-col gap-8">
+        <main className="flex flex-col">
           <Queues queues={queues} onAddQueueClick={onAddQueueClick} />
+
+          <div className="divider px-40"></div>
 
           <div
             className="flex items-center flex-col pb-10 px-40 overflow-y-scroll"

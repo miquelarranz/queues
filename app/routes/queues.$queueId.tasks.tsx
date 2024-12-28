@@ -39,61 +39,32 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   }
 };
 
-const AddTaskButton = () => {
-  return (
-    <Form method="post">
-      <button
-        type="submit"
-        name="_action"
-        value="create"
-        className="rounded-full hover:bg-slate-200 p-1"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="size-6 text-blue-600"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 4.5v15m7.5-7.5h-15"
-          />
-        </svg>
-      </button>
-    </Form>
-  );
-};
-
 export default function Queue() {
   const { tasks } = useLoaderData<typeof loader>();
   const hasTasks = tasks.length > 0;
 
   return (
     <div className="flex flex-col w-full items-center gap-5 overflow-y-scroll">
-      {hasTasks ? (
-        <>
-          {tasks.map((task: TaskType) => (
-            <Task key={task.id} task={task} />
-          ))}
-          <span className="w-full text-end">
-            <AddTaskButton />
-          </span>
-        </>
-      ) : (
+      {tasks.map((task: TaskType) => (
+        <Task key={task.id} task={task} />
+      ))}
+
+      {!hasTasks && <p>This queue is empty</p>}
+
+      {hasTasks && <div className="divider"></div>}
+
+      <span className="absolute bottom-8 right-8">
         <Form method="post">
           <Button
             type="submit"
             name="_action"
             value="create"
-            kind="primary"
-            size="small"
-            text={"Add a task!"}
+            kind="secondary"
+            fullRounded
+            text="+"
           />
         </Form>
-      )}
+      </span>
     </div>
   );
 }

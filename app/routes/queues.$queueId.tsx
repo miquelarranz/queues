@@ -2,6 +2,7 @@ import { fetchQueue } from "~/transport/queues.server";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
+import { Button } from "~/components/common/button";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.queueId, "Missing queueId param");
@@ -20,13 +21,13 @@ export default function Queue() {
 
   return (
     <div id="queue" className="flex flex-col w-full items-center gap-5">
-      <section className="flex gap-2 items-center justify-center h-10">
-        <a
-          href={`/queues/${queue.id}/settings`}
-          className="text-sm text-slate-500 hover:underline"
-        >
-          Settings
-        </a>
+      <section className="flex gap-2 justify-end w-full">
+        <Button
+          isLink
+          gotToPath={`/queues/${queue.id}/settings`}
+          text="Settings"
+          size="small"
+        />
       </section>
       <section className="w-full">
         <Outlet />

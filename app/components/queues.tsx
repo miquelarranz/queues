@@ -13,17 +13,15 @@ export const Queues = ({ queues, onAddQueueClick }: Props) => {
   return (
     <nav className="flex gap-2 h-fit mt-8 justify-center overflow-x-auto">
       {queues.map((queue: Queue) => (
-        <>
-          <Button
-            kind="secondary"
-            size="small"
-            disabled={state === "loading"}
-            key={queue.id}
-            isLink
-            gotToPath={`/queues/${queue.id}/tasks`}
-            text={queue.name}
-          />
-        </>
+        <Button
+          kind="secondary"
+          size="small"
+          disabled={state === "loading"}
+          key={queue.id}
+          isLink
+          gotToPath={`/queues/${queue.id}/tasks`}
+          text={queue.name}
+        />
       ))}
       <Form method="post">
         <Button
