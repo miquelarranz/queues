@@ -5,8 +5,7 @@ import {
 } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { fetchQueue, updateQueueName } from "~/transport/queues.server";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
-import { Button } from "~/components/common/button";
+import { Form, useLoaderData } from "@remix-run/react";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.queueId, "Missing queueId param");
@@ -28,7 +27,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
 
   await updateQueueName(params.queueId, newName as string);
 
-  return redirect("../tasks");
+  return redirect("..");
 };
 
 const ConfirmButton = () => {
@@ -85,20 +84,11 @@ const DeleteButton = () => (
   </Form>
 );
 
-const BackButton = () => {
-  const navigate = useNavigate();
-
-  return (
-    <Button onClick={() => navigate(`../tasks`)} text="Back" color="slate" />
-  );
-};
-
 export default function EditQueue() {
   const { queue } = useLoaderData<typeof loader>();
 
   return (
     <section className="flex gap-8 items-center justify-center h-10">
-      <BackButton />
       <div id="queue" className="flex flex-col w-full items-center gap-2">
         <Form method="post" className="flex gap-2">
           <input

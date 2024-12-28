@@ -1,5 +1,7 @@
 export const Header = () => (
   <header className="navbar bg-base-100">
-    <h1 className="text-2xl">Queues</h1>
+    <a href="/" className="text-2xl">
+      Queues
+    </a>
   </header>
 );
