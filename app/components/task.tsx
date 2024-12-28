@@ -31,6 +31,8 @@ export const Task = ({ task }: Props) => {
 
   const isLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
+  const placeholder = "Describe your next task...";
+  const hasEmptyTitle = !task.title || task.title === "";
 
   return (
     <div className="card card-compact bg-base-100 w-full shadow-sm">
@@ -40,6 +42,7 @@ export const Task = ({ task }: Props) => {
         ) : isEditing ? (
           <input
             autoFocus
+            placeholder={placeholder}
             className="input input-xs w-full"
             onBlur={handleTaskTitleUpdate}
             onKeyUp={(event) => {
@@ -51,7 +54,9 @@ export const Task = ({ task }: Props) => {
             defaultValue={task.title}
           />
         ) : (
-          <p onClick={() => setIsEditing(true)}>{task.title}</p>
+          <p onClick={() => setIsEditing(true)}>
+            {hasEmptyTitle ? placeholder : task.title}
+          </p>
         )}
       </div>
     </div>
