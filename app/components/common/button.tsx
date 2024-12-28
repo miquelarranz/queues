@@ -1,10 +1,11 @@
 import { NavLink } from "@remix-run/react";
+import { ReactNode } from "react";
 
-export type ButtonKind = "primary" | "secondary" | "default";
-export type ButtonSize = "medium" | "small";
+export type ButtonKind = "primary" | "secondary" | "default" | "error";
+export type ButtonSize = "medium" | "small" | "micro";
 
 type Props = {
-  text: string;
+  text?: string;
   fullRounded?: boolean;
   isLink?: boolean;
   gotToPath?: string;
@@ -16,17 +17,20 @@ type Props = {
   name?: string;
   value?: string;
   outlined?: boolean;
+  leftIcon?: ReactNode;
 };
 
 const kindToClass: Record<ButtonKind, string> = {
   primary: "btn btn-primary",
   secondary: "btn btn-secondary",
   default: "btn",
+  error: "btn btn-error",
 };
 
 const sizeToClass: Record<ButtonSize, string> = {
   medium: "",
   small: "btn-sm",
+  micro: "btn-xs",
 };
 
 export const Button = ({
@@ -42,6 +46,7 @@ export const Button = ({
   size = "medium",
   value,
   outlined,
+  leftIcon,
 }: Props) => {
   const className = `${kindToClass[kind]} ${sizeToClass[size]} ${
     fullRounded ? "btn-circle" : ""
@@ -58,7 +63,8 @@ export const Button = ({
         ${outlined ? "btn-outline" : ""}`
       }
     >
-      {text}
+      {leftIcon && leftIcon}
+      {text && text}
     </NavLink>
   ) : (
     <button
@@ -70,7 +76,8 @@ export const Button = ({
       }`}
       type={type}
     >
-      {text}
+      {leftIcon && leftIcon}
+      {text && text}
     </button>
   );
 };

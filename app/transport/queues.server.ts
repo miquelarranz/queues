@@ -26,7 +26,8 @@ export const fetchQueue = async (queueId: string) => {
     .from("queues")
     .select(
       `
-      id
+        id,
+        name
       `
     )
     .eq("id", queueId)
