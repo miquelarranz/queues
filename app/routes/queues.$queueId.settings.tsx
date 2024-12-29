@@ -73,7 +73,7 @@ const EditQueueName = ({ queue }: { queue: Queue }) => (
 
 export default function QueueSettings() {
   const { queue } = useLoaderData<typeof loader>();
-  console.log(queue);
+
   return (
     <section className="flex flex-col gap-8 rounded-lg bg-white p-8 shadow-sm">
       <h1 className="text-xl">Queue settings</h1>
