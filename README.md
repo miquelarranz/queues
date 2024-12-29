@@ -9,7 +9,7 @@ keep track of your daily progress.
 ## Decisions & Stack
 
 - The app is built with [Remix](https://remix.run/). I wanted to give a try to the framework and live all the end-to-end journey.
-- The app uses [Tailwind](https://tailwindcss.com/) to style all the components. I'm a big fan of Tailwind! I combine it with daisyUI to generate easily some components.
+- The app uses [Tailwind](https://tailwindcss.com/) to style all the components. I'm a big fan of Tailwind! I have combined it with [daisyUI](https://daisyui.com/) to easily generate some components.
 - The app is connected to a [Supabase](https://supabase.io/) database for now.
 
 I will manage authentication there as well. This is a temporal approach, I plan to work on the server side at some point with 
