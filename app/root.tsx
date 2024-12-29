@@ -22,7 +22,7 @@ export const meta: MetaFunction = () => {
     { title: "Queue" },
     {
       name: "description",
-      content: "Daily task management app",
+      content: "Daily task management web app",
     },
   ];
 };
