@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import { LinksFunction, redirect } from "@remix-run/node";
+import { LinksFunction, LoaderFunctionArgs, redirect } from "@remix-run/node";
 import tailwind from "./tailwind.css?url";
 import { createEmptyQueue, fetchQueues } from "~/transport/queues.server";
 import { Header } from "~/components/header";
@@ -27,8 +27,14 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const queues = await fetchQueues();
+
+  const url = new URL(request.url);
+  if (url.pathname === `/` && queues.length > 0) {
+    return redirect(`/queues/${queues[0].id}/tasks`);
+  }
+
   return Response.json({
     queues,
   });
