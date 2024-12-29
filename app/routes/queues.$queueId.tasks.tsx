@@ -3,6 +3,8 @@ import {
   createEmptyTask,
   updateTaskTitle,
   fetchTasks,
+  updateTaskStatus,
+  TaskStatus,
 } from "~/transport/tasks.server";
 import { type ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -19,7 +21,10 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Not Found", { status: 404 });
   }
 
-  return Response.json({ tasks });
+  return Response.json({
+    pendingTasks: tasks.filter(({ status }) => status === "pending"),
+    completedTasks: tasks.filter(({ status }) => status === "completed"),
+  });
 };
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
@@ -37,21 +42,35 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
       values.title as string
     );
   }
+
+  if (_action === "update-status") {
+    return await updateTaskStatus(
+      values.taskId as string,
+      values.status as TaskStatus
+    );
+  }
 };
 
-export default function Queue() {
-  const { tasks } = useLoaderData<typeof loader>();
-  const hasTasks = tasks.length > 0;
+export default function Tasks() {
+  const { pendingTasks, completedTasks } = useLoaderData<typeof loader>();
+  const hasPendingTasks = pendingTasks.length > 0;
+  const hasCompletedTasks = completedTasks.length > 0;
 
   return (
     <div className="flex flex-col w-full items-center gap-5 overflow-y-scroll">
-      {tasks.map((task: TaskType) => (
+      {pendingTasks.map((task: TaskType) => (
         <Task key={task.id} task={task} />
       ))}
 
-      {!hasTasks && <p>This queue is empty</p>}
+      {!hasPendingTasks && <p>The queue is empty</p>}
 
-      {hasTasks && <div className="divider"></div>}
+      <div className="divider"></div>
+
+      {!hasCompletedTasks && <p>0 completed tasks</p>}
+
+      {completedTasks.map((task: TaskType) => (
+        <Task key={task.id} completed task={task} />
+      ))}
 
       <span className="absolute bottom-8 right-8">
         <Form method="post">

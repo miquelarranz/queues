@@ -1,7 +1,12 @@
 import { NavLink } from "@remix-run/react";
-import { ReactNode } from "react";
+import { ReactNode, MouseEvent } from "react";
 
-export type ButtonKind = "primary" | "secondary" | "default" | "error";
+export type ButtonKind =
+  | "primary"
+  | "secondary"
+  | "default"
+  | "error"
+  | "ghost";
 export type ButtonSize = "medium" | "small" | "micro";
 
 type Props = {
@@ -9,7 +14,7 @@ type Props = {
   fullRounded?: boolean;
   isLink?: boolean;
   gotToPath?: string;
-  onClick?: VoidFunction;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: "button" | "submit" | "reset";
   kind?: ButtonKind;
   size?: ButtonSize;
@@ -25,6 +30,7 @@ const kindToClass: Record<ButtonKind, string> = {
   secondary: "btn btn-secondary",
   default: "btn",
   error: "btn btn-error",
+  ghost: "btn btn-ghost",
 };
 
 const sizeToClass: Record<ButtonSize, string> = {

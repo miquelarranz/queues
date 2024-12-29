@@ -3,6 +3,8 @@ import invariant from "tiny-invariant";
 import { fetchQueue, Queue, updateQueueName } from "~/transport/queues.server";
 import { Form, useLoaderData } from "@remix-run/react";
 import { Button } from "~/components/common/button";
+import { CheckIcon } from "~/components/icons/check-icon";
+import { TrashIcon } from "~/components/icons/trash-icon";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.queueId, "Missing queueId param");
@@ -29,7 +31,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
 
 const DeleteQueue = () => (
   <Form
-    action="delete"
+    action="destroy"
     method="post"
     className="flex gap-2 items-center"
     onSubmit={(event) => {
@@ -44,27 +46,7 @@ const DeleteQueue = () => (
     <label className="text-sm" htmlFor="name">
       Delete queue permanently:
     </label>
-    <Button
-      type="submit"
-      kind="error"
-      size="micro"
-      leftIcon={
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-          />
-        </svg>
-      }
-    />
+    <Button type="submit" kind="error" size="micro" leftIcon={<TrashIcon />} />
   </Form>
 );
 
@@ -83,22 +65,8 @@ const EditQueueName = ({ queue }: { queue: Queue }) => (
       kind="primary"
       size="micro"
       fullRounded
-      leftIcon={
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m4.5 12.75 6 6 9-13.5"
-          />
-        </svg>
-      }
+      outlined
+      leftIcon={<CheckIcon />}
     ></Button>
   </Form>
 );
