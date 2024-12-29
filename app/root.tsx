@@ -15,7 +15,7 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Queue" },
+    { title: "Queues" },
     {
       name: "description",
       content: "Daily task management web app",
