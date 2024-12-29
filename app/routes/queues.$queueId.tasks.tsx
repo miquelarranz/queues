@@ -57,7 +57,7 @@ export default function Tasks() {
   const hasCompletedTasks = completedTasks.length > 0;
 
   return (
-    <div className="flex flex-col w-full items-center gap-5 overflow-y-scroll">
+    <div className="flex flex-col w-full items-center gap-5 overflow-y-scroll pb-2 md:pb-10">
       {pendingTasks.map((task: TaskType) => (
         <Task key={task.id} task={task} />
       ))}

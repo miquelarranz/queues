@@ -80,7 +80,10 @@ export const Task = ({ task, completed }: Props) => {
         completed ? "bg-base-200" : "bg-base-100"
       } w-full shadow-sm`}
     >
-      <div className="card-body flex-row" style={{ minHeight: 52 }}>
+      <div
+        className="card-body flex-row items-center"
+        style={{ minHeight: 52 }}
+      >
         {isLoading ? (
           <div className="skeleton h-4 w-32"></div>
         ) : isEditing ? (
@@ -99,7 +102,7 @@ export const Task = ({ task, completed }: Props) => {
           />
         ) : (
           <p
-            className={completed ? "line-through" : ""}
+            className={`h-5 ${completed ? "line-through" : ""}`}
             onClick={() => !completed && setIsEditing(true)}
           >
             {hasEmptyTitle ? placeholder : task.title}

@@ -4,10 +4,9 @@ import { Form, useNavigation } from "@remix-run/react";
 
 type Props = {
   queues: Queue[];
-  onAddQueueClick: VoidFunction;
 };
 
-export const Queues = ({ queues, onAddQueueClick }: Props) => {
+export const Queues = ({ queues }: Props) => {
   const { state } = useNavigation();
 
   return (
@@ -27,7 +26,6 @@ export const Queues = ({ queues, onAddQueueClick }: Props) => {
         <Button
           type="submit"
           disabled={state === "loading"}
-          onClick={onAddQueueClick}
           kind="default"
           size="small"
           fullRounded
